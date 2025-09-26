@@ -1,0 +1,37 @@
+name: Build Kivy APK
+
+on:
+  # যখন কোডে নতুন পরিবর্তন (push) করা হবে, তখনই বিল্ড শুরু হবে
+  push:
+    branches: [ main ]
+  # আপনি চাইলে manually-ও বিল্ড করতে পারবেন
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    # এই বিল্ডটি একটি Linux সার্ভারে চলবে
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      # Buildozer এর জন্য প্রয়োজনীয় লিনাক্স প্যাকেজ ইন্সটল
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential libssl-dev zlib1g-dev libncursesw5-dev libgdbm-dev libc6-dev libsqlite3-dev tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+    - name: Install Buildozer
+      run: pip install buildozer
+
+    - name: Build APK (এটিই আসল বিল্ড কমান্ড)
+      # কম্যান্ডে লগ-লেভেল 2 দেওয়া হয়েছে, যাতে ত্রুটি দেখা দিলে সহজে বোঝা যায়
+      run: buildozer android debug -v 2
+
+    - name: Upload APK to Artifacts
+      # APK ফাইলটি তৈরি হলে, GitHub এ সেভ করা হবে
+      uses: actions/upload-artifact@v4
+      with:
+        name: APK-build
+        path: bin/*.apk

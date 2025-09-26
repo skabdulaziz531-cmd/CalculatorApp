@@ -1,0 +1,31 @@
+# [app] সেকশনটি আপনার অ্যাপের তথ্য দেবে
+[app]
+
+# (এই লাইনগুলো খুব গুরুত্বপূর্ণ—আপনার Colab-এর ব্যর্থতা এড়াতে)
+title = Advanced Calculator
+package.name = advancedcalculator
+package.domain = org.test
+source.dir = .
+source.include_exts = py,png,jpg,kv,atlas
+
+# আপনার অ্যাপের রুট ফাইল
+main.py = main.py
+
+# Android API এবং NDK ভার্সন যা বিল্ড সার্ভার ব্যবহার করবে
+# (এটি Colab-এর চেয়ে অনেক স্থিতিশীল)
+android.api = 27
+android.minapi = 21
+
+# Kivy ভার্সন
+requirements = python3,kivy==2.0.0
+orientation = all
+
+# (বাকি সেটিংসগুলো যেমন আছে তেমনই থাক)
+# ------------------------------------
+# (Buildozer-এর ডিফল্ট সেটিংস)
+# ------------------------------------
+version = 0.1
+fullscreen = 0
+icon.filename = %(source.dir)s/icon.png
+osx.app_name = %(title)s
+# ... ইত্যাদি
